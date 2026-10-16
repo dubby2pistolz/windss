@@ -70,6 +70,8 @@ h1{font-size:1.8rem;margin:0 0 4px}
 .side .acts{display:flex;gap:6px}
 .side button{padding:4px 10px}
 .empty{padding:34px 16px;text-align:center;color:var(--muted)}
+.notice{display:block;width:100%;text-align:left;background:var(--bar);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:6px;padding:10px 14px;margin-bottom:16px}
+.box .entry p{margin:6px 0 0;font-size:.85rem}
 .view{display:none}.view.on{display:block}
 form .f{margin-bottom:12px}
 label{display:block;font-size:.8rem;font-weight:600;margin-bottom:4px}
@@ -93,7 +95,9 @@ pre{margin:0;padding:14px;max-height:380px;overflow:auto;background:var(--input)
     <button class="tab" data-v="resources" type="button">Resources</button>
     <button class="tab" data-v="share" type="button">Share</button>
     <button class="tab" data-v="api" type="button">API</button>
+    <button class="tab" data-v="announcements" type="button">Announcements</button>
     <button class="tab" data-v="changelog" type="button">Changelog</button>
+    <button class="tab" data-v="help" type="button">Help</button>
   </div>
   <div class="r">
     <a class="btn primary" id="join" href="#" target="_blank" rel="noopener">Join Discord</a>
@@ -105,6 +109,7 @@ pre{margin:0;padding:14px;max-height:380px;overflow:auto;background:var(--input)
   <section class="view" id="v-resources">
     <h1>Welcome to Winds</h1>
     <p class="sub">Share and download Roblox scripts and models.</p>
+    <button type="button" class="notice" onclick="show('announcements')"><strong>Announcement:</strong> Winds is live. Open the Help page to see what each section does.</button>
     <div class="grid">
       <aside>
         <div class="box"><h2>Categories</h2><div id="cats"></div></div>
@@ -148,6 +153,15 @@ pre{margin:0;padding:14px;max-height:380px;overflow:auto;background:var(--input)
     </div></div>
   </section>
 
+  <section class="view" id="v-announcements">
+    <h1>Announcements</h1>
+    <p class="sub">News from the Winds team. Sample entries, edit them in the page source.</p>
+    <div class="box" style="max-width:760px">
+      <div class="entry"><h3>Winds is live</h3><span class="meta">Oct 16, 2026</span><p>Welcome. You can now browse, share and download scripts and models. Start with the Help page.</p></div>
+      <div class="entry"><h3>Join our Discord</h3><span class="meta">Oct 16, 2026</span><p>Ask questions, report problems and suggest features in the Discord server.</p></div>
+    </div>
+  </section>
+
   <section class="view" id="v-changelog">
     <h1>Changelog</h1>
     <p class="sub">Sample entries. Edit them in the page source.</p>
@@ -155,6 +169,20 @@ pre{margin:0;padding:14px;max-height:380px;overflow:auto;background:var(--input)
       <div class="entry"><h3>v2.0.0</h3><span class="meta">Oct 16, 2026</span><ul><li>New resources layout with categories</li><li>Share scripts and models</li><li>Added API explorer</li><li>Removed the editor</li></ul></div>
       <div class="entry"><h3>v1.3.0</h3><span class="meta">Oct 16, 2026</span><ul><li>Dark and light themes</li><li>RBXM, RBXL, RBXMX and LUA/TXT upload</li></ul></div>
       <div class="entry"><h3>v1.0.0</h3><span class="meta">Oct 1, 2026</span><ul><li>First release of Winds</li></ul></div>
+    </div>
+  </section>
+
+  <section class="view" id="v-help">
+    <h1>Help</h1>
+    <p class="sub">What each part of the site is for.</p>
+    <div class="box" style="max-width:760px">
+      <div class="entry"><h3>Resources</h3><p>Browse what other people shared. Pick a category on the left, then download a file or copy a script. Top resources lists the most downloaded ones.</p></div>
+      <div class="entry"><h3>Share</h3><p>Upload your own script (.lua, .txt) or model (.rbxm, .rbxl, .rbxmx). Add a title, a category and a short description so others know what it does. You need to be signed in to claude.ai to share.</p></div>
+      <div class="entry"><h3>API</h3><p>Lets you read the site's data as JSON: the list of resources, one resource by id, or the raw text of a script. Use it to check what the data looks like or to export everything. The API page works inside this site only.</p></div>
+      <div class="entry"><h3>Announcements</h3><p>Official news about the site: new features, events and important notices.</p></div>
+      <div class="entry"><h3>Changelog</h3><p>The history of updates, listed by version, so you can see what changed and when.</p></div>
+      <div class="entry"><h3>Join Discord</h3><p>The button in the top bar opens our Discord server for questions, feedback and support.</p></div>
+      <div class="entry"><h3>Dark / Light</h3><p>Switches the site between the dark and light theme.</p></div>
     </div>
   </section>
 </div>
