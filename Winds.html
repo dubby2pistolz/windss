@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Winds</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#ffffff;--bar:#f5f5f6;--panel:#ffffff;--line:#e1e1e4;--text:#1d1d20;--muted:#6b6b72;
+  --accent:#2563eb;--accent-text:#fff;--hover:#efeff1;--input:#ffffff;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0c0c0d;--bar:#141416;--panel:#18181a;--line:#2a2a2e;--text:#ececee;--muted:#8e8e95;
+    --accent:#3b82f6;--accent-text:#fff;--hover:#222226;--input:#111113;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0c0c0d;--bar:#141416;--panel:#18181a;--line:#2a2a2e;--text:#ececee;--muted:#8e8e95;
+  --accent:#3b82f6;--accent-text:#fff;--hover:#222226;--input:#111113;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Sora,system-ui,sans-serif;font-size:14px;line-height:1.5}
+button,.btn,select,input,textarea{font:inherit;color:var(--text)}
+button,.btn{cursor:pointer;border:1px solid var(--line);background:var(--panel);border-radius:6px;padding:7px 12px;text-decoration:none;display:inline-block;font-size:.82rem}
+button:hover,.btn:hover{background:var(--hover);border-color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.primary{background:var(--accent);color:var(--accent-text);border-color:var(--accent);font-weight:600}
+.primary:hover{background:var(--accent);filter:brightness(1.1)}
+button,.btn{transition:background .2s ease,color .2s ease,border-color .2s ease,transform .2s ease}
+button:hover,.btn:hover{transform:translateY(-1px)}
+.cat:hover{background:var(--accent);color:var(--accent-text)}
+.tab:hover{background:var(--hover);transform:none}
+.tab{position:relative;z-index:1}
+.cat:hover .cnt,.cat[aria-pressed="true"] .cnt{background:rgba(255,255,255,.25)}
+input,select,textarea{background:var(--input);border:1px solid var(--line);border-radius:6px;padding:8px 10px;width:100%}
+.banner{background:var(--bar);text-align:center;padding:26px 12px 18px;border-bottom:1px solid var(--line)}
+.logo{font-weight:800;font-size:clamp(2.6rem,10vw,4.6rem);letter-spacing:.14em;line-height:1.1;margin:0;display:inline-block;background:linear-gradient(135deg,#7cc4ff 0%,#3b82f6 50%,#1d4ed8 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;filter:drop-shadow(0 5px 4px rgba(0,0,0,.65))}
+.nav{background:var(--panel);border-bottom:3px solid var(--accent);display:flex;justify-content:space-between;align-items:center;gap:8px;padding:0 12px;flex-wrap:wrap}
+.nav .l,.nav .r{display:flex;gap:2px;align-items:center;flex-wrap:wrap}
+.tab{border:0;border-radius:0;background:none;padding:13px 14px;font-weight:600}
+.tab[aria-current="page"]{color:var(--accent-text)}
+.tab[aria-current="page"]:hover{background:none}
+.nav .l{position:relative}
+.ind{position:absolute;left:0;top:0;width:0;height:0;background:var(--accent);transition:left .3s cubic-bezier(.4,0,.2,1),width .3s cubic-bezier(.4,0,.2,1);pointer-events:none}
+.wrap{max-width:1180px;margin:0 auto;padding:22px 16px 60px}
+h1{font-size:1.8rem;margin:0 0 4px}
+.sub{color:var(--muted);margin:0 0 18px}
+.grid{display:grid;grid-template-columns:240px 1fr;gap:16px;align-items:start}
+@media(max-width:760px){.grid{grid-template-columns:1fr}}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-bottom:16px}
+.box h2{margin:0;padding:11px 14px;background:var(--accent);color:var(--accent-text);font-size:1.05rem}
+.box h3{margin:0;padding:10px 14px;background:var(--bar);font-size:.85rem;border-bottom:1px solid var(--line)}
+.cat{display:flex;justify-content:space-between;width:100%;border:0;border-radius:0;background:none;padding:9px 14px;text-align:left}
+.cat[aria-pressed="true"]{background:var(--accent);color:var(--accent-text);font-weight:700}
+.cnt{background:var(--bar);border-radius:4px;padding:0 7px;font-size:.75rem}
+.top{padding:9px 14px;border-top:1px solid var(--line);font-size:.8rem}
+.top small{display:block;color:var(--muted)}
+.row{display:flex;gap:12px;padding:14px;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.ico{flex:none;width:44px;height:44px;border-radius:50%;background:var(--bar);border:1px solid var(--line);display:grid;place-items:center;font:600 .62rem "JetBrains Mono",monospace}
+.info{flex:1;min-width:0}
+.title{font-size:1.02rem;font-weight:600;margin:0}
+.title span{color:var(--muted);font-weight:400;font-size:.9rem;margin-left:6px}
+.meta{color:var(--muted);font-size:.76rem}
+.desc{font-size:.82rem;margin-top:3px;overflow-wrap:anywhere}
+.side{text-align:right;font-size:.76rem;color:var(--muted);display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+.side .acts{display:flex;gap:6px}
+.side button{padding:4px 10px}
+.empty{padding:34px 16px;text-align:center;color:var(--muted)}
+.view{display:none}.view.on{display:block}
+form .f{margin-bottom:12px}
+label{display:block;font-size:.8rem;font-weight:600;margin-bottom:4px}
+.pad{padding:16px}
+pre{margin:0;padding:14px;max-height:380px;overflow:auto;background:var(--input);border:1px solid var(--line);border-radius:6px;font:400 .78rem/1.6 "JetBrains Mono",monospace;white-space:pre-wrap;overflow-wrap:anywhere}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.entry{padding:14px 16px;border-top:1px solid var(--line)}
+.entry:first-of-type{border-top:0}
+.entry h3{background:none;border:0;padding:0;font-size:1rem}
+.entry ul{margin:8px 0 0;padding-left:18px}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--text);color:var(--bg);padding:8px 16px;border-radius:8px;font-size:.82rem;opacity:0;pointer-events:none;transition:opacity .2s;max-width:90vw;text-align:center}
+.toast.show{opacity:1}
+@media (prefers-reduced-motion:reduce){.toast,button,.btn,.ind{transition:none}button:hover,.btn:hover{transform:none}}
+</style>
+</head>
+<body>
+<div class="banner"><p class="logo">WINDS</p></div>
+<nav class="nav" aria-label="Main">
+  <div class="l">
+    <span class="ind" id="ind"></span>
+    <button class="tab" data-v="resources" type="button">Resources</button>
+    <button class="tab" data-v="share" type="button">Share</button>
+    <button class="tab" data-v="api" type="button">API</button>
+    <button class="tab" data-v="changelog" type="button">Changelog</button>
+  </div>
+  <div class="r">
+    <a class="btn primary" id="join" href="#" target="_blank" rel="noopener">Join Discord</a>
+    <button type="button" id="theme" aria-label="Switch between dark and light theme">Dark / Light</button>
+  </div>
+</nav>
+
+<div class="wrap">
+  <section class="view" id="v-resources">
+    <h1>Welcome to Winds</h1>
+    <p class="sub">Share and download Roblox scripts and models.</p>
+    <div class="grid">
+      <aside>
+        <div class="box"><h2>Categories</h2><div id="cats"></div></div>
+        <div class="box"><h3>Top resources</h3><div id="top"></div></div>
+      </aside>
+      <div class="box" id="list"></div>
+    </div>
+  </section>
+
+  <section class="view" id="v-share">
+    <h1>Share a resource</h1>
+    <p class="sub">Upload a script (.lua, .txt) or a model (.rbxm, .rbxl, .rbxmx).</p>
+    <div class="box" style="max-width:640px"><div class="pad">
+      <form id="form">
+        <div class="f"><label for="t">Title</label><input id="t" required maxlength="80"></div>
+        <div class="f"><label for="c">Category</label><select id="c"></select></div>
+        <div class="f"><label for="d">Description</label><textarea id="d" rows="3" maxlength="300" required></textarea></div>
+        <div class="f"><label for="file">File</label><input type="file" id="file" accept=".lua,.txt,.rbxm,.rbxl,.rbxmx" required></div>
+        <button class="primary" type="submit" id="send">Share resource</button>
+      </form>
+    </div></div>
+  </section>
+
+  <section class="view" id="v-api">
+    <h1>API</h1>
+    <p class="sub">Query the resource data. This explorer reads the same live data the site shows.</p>
+    <div class="box" style="max-width:760px"><div class="pad">
+      <div class="two f">
+        <div><label for="ep">Endpoint</label>
+          <select id="ep">
+            <option value="/resources">GET /resources</option>
+            <option value="/resources?category=Scripts">GET /resources?category=Scripts</option>
+            <option value="/resources/:id">GET /resources/:id</option>
+            <option value="/raw/:id">GET /raw/:id (script text)</option>
+          </select></div>
+        <div><label for="rid">Resource id (for :id)</label><input id="rid" placeholder="paste an id"></div>
+      </div>
+      <div class="f" style="display:flex;gap:8px"><button class="primary" type="button" id="run">Send request</button><button type="button" id="exp">Download all as JSON</button></div>
+      <pre id="api-out">Pick an endpoint and send a request.</pre>
+      <p class="meta">Fields: id, title, category, description, author, kind (script or model), filename, downloads, created.</p>
+    </div></div>
+  </section>
+
+  <section class="view" id="v-changelog">
+    <h1>Changelog</h1>
+    <p class="sub">Sample entries. Edit them in the page source.</p>
+    <div class="box" style="max-width:760px">
+      <div class="entry"><h3>v2.0.0</h3><span class="meta">Oct 16, 2026</span><ul><li>New resources layout with categories</li><li>Share scripts and models</li><li>Added API explorer</li><li>Removed the editor</li></ul></div>
+      <div class="entry"><h3>v1.3.0</h3><span class="meta">Oct 16, 2026</span><ul><li>Dark and light themes</li><li>RBXM, RBXL, RBXMX and LUA/TXT upload</li></ul></div>
+      <div class="entry"><h3>v1.0.0</h3><span class="meta">Oct 1, 2026</span><ul><li>First release of Winds</li></ul></div>
+    </div>
+  </section>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+var DISCORD_URL = "https://discord.gg/YOUR-INVITE"; // replace with your invite link
+var CATS = ["Scripts","Models","Plugins","UI / GFX","Other"];
+var $ = function(i){return document.getElementById(i);};
+$("join").href = DISCORD_URL;
+var items = [], cat = "All", db = null, assets = null, dl = null, who = {name:"Guest"}, state = "loading";
+
+function toast(m){var t=$("toast");t.textContent=m;t.classList.add("show");clearTimeout(toast.h);toast.h=setTimeout(function(){t.classList.remove("show");},2400);}
+function el(tag, cls, text){var e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e;}
+function fdate(ms){return ms ? new Date(ms).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}) : "";}
+function ext(n){var m=/\.([a-z0-9]+)$/i.exec(n||"");return m?m[1].toUpperCase():"FILE";}
+
+function show(v){
+  document.querySelectorAll(".view").forEach(function(s){s.classList.toggle("on", s.id==="v-"+v);});
+  document.querySelectorAll(".tab").forEach(function(b){if(b.dataset.v===v)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current");});
+  moveInd();
+}
+function moveInd(){
+  var ind=$("ind"), cur=document.querySelector('.tab[aria-current="page"]');
+  if(!ind||!cur) return;
+  ind.style.left=cur.offsetLeft+"px"; ind.style.top=cur.offsetTop+"px";
+  ind.style.width=cur.offsetWidth+"px"; ind.style.height=cur.offsetHeight+"px";
+}
+window.addEventListener("resize",moveInd);
+window.addEventListener("load",moveInd);
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(moveInd);
+document.querySelectorAll(".tab").forEach(function(b){b.onclick=function(){show(b.dataset.v);};});
+show("resources");
+
+CATS.forEach(function(c){var o=el("option",null,c);o.value=c;$("c").appendChild(o);});
+
+function render(){
+  var cats = $("cats"); cats.innerHTML = "";
+  ["All"].concat(CATS).forEach(function(c){
+    var n = c==="All" ? items.length : items.filter(function(i){return i.category===c;}).length;
+    var b = el("button","cat"); b.type="button"; b.setAttribute("aria-pressed", c===cat?"true":"false");
+    b.appendChild(el("span",null,c)); b.appendChild(el("span","cnt",String(n)));
+    b.onclick=function(){cat=c;render();}; cats.appendChild(b);
+  });
+  var top = $("top"); top.innerHTML = "";
+  var best = items.slice().sort(function(a,b){return (b.downloads||0)-(a.downloads||0);}).slice(0,5);
+  if(!best.length) top.appendChild(el("div","top","Nothing yet."));
+  best.forEach(function(i){var d=el("div","top",i.title);d.appendChild(el("small",null,(i.downloads||0)+" downloads"));top.appendChild(d);});
+
+  var list = $("list"); list.innerHTML = "";
+  var shown = items.filter(function(i){return cat==="All"||i.category===cat;}).sort(function(a,b){return (b.created||0)-(a.created||0);});
+  if(!shown.length){
+    var msg = state==="nodb" ? "Sign in to claude.ai to view and share resources."
+            : state==="loading" ? "Loading resources..."
+            : "No resources here yet. Use Share to add the first one.";
+    list.appendChild(el("div","empty",msg)); return;
+  }
+  shown.forEach(function(i){
+    var r = el("div","row");
+    r.appendChild(el("div","ico",ext(i.filename)));
+    var info = el("div","info");
+    var t = el("p","title",i.title); if(i.version) t.appendChild(el("span",null,i.version));
+    info.appendChild(t);
+    info.appendChild(el("div","meta",(i.author||"Guest")+" · "+fdate(i.created)+" · "+i.category));
+    info.appendChild(el("div","desc",i.description||""));
+    r.appendChild(info);
+    var side = el("div","side");
+    side.appendChild(el("div",null,(i.downloads||0)+" downloads"));
+    var acts = el("div","acts");
+    if(i.kind==="script"){var cp=el("button",null,"Copy");cp.type="button";cp.onclick=function(){copyText(i);};acts.appendChild(cp);}
+    var d = el("button","primary","Download"); d.type="button"; d.onclick=function(){download(i);}; acts.appendChild(d);
+    side.appendChild(acts); r.appendChild(side); list.appendChild(r);
+  });
+}
+
+function bump(i){ if(db) db.collection("resources").doc(i.id).update({downloads:(i.downloads||0)+1}).catch(function(){}); }
+function copyText(i){
+  if(!navigator.clipboard) return toast("Copy is not available here");
+  navigator.clipboard.writeText(i.text||"").then(function(){toast("Script copied");},function(){toast("Could not copy");});
+}
+function download(i){
+  if(!dl) return toast("Downloads are not available here");
+  var p = i.kind==="script" ? Promise.resolve(i.text||"") : fetch(i.url).then(function(r){return r.blob();});
+  p.then(function(data){return dl.save({filename:i.filename,data:data});})
+   .then(function(){bump(i);})
+   .catch(function(e){toast(e&&e.code==="declined"?"Download cancelled":"Could not download this file");});
+}
+
+$("form").onsubmit = async function(e){
+  e.preventDefault();
+  if(!db) return toast("Sign in to claude.ai to share");
+  var f = $("file").files[0]; if(!f) return;
+  var x = ext(f.name), isScript = (x==="LUA"||x==="TXT");
+  var rec = {title:$("t").value.trim(), category:$("c").value, description:$("d").value.trim(),
+             author:who.name, filename:f.name, downloads:0, created:Date.now(), kind:isScript?"script":"model"};
+  var btn = $("send"); btn.disabled = true;
+  try{
+    if(isScript){
+      if(f.size>200000) throw new Error("Script is too large (200 KB max)");
+      rec.text = await f.text();
+    } else {
+      if(!assets) throw new Error("Uploading models is not available for your account here");
+      var up = await assets.upload(f); rec.assetId = up.id; rec.url = up.url;
+    }
+    await db.collection("resources").add(rec);
+    $("form").reset(); toast("Resource shared"); show("resources");
+  }catch(err){ toast(err && err.message ? err.message : "Could not share this file"); }
+  btn.disabled = false;
+};
+
+function pub(i){return {id:i.id,title:i.title,category:i.category,description:i.description||"",author:i.author||"Guest",kind:i.kind,filename:i.filename,downloads:i.downloads||0,created:i.created?new Date(i.created).toISOString():null};}
+$("run").onclick = function(){
+  var ep = $("ep").value, id = $("rid").value.trim(), out;
+  if(ep.indexOf(":id")>-1){
+    var it = items.filter(function(x){return x.id===id;})[0];
+    out = !it ? JSON.stringify({error:"not_found"},null,2)
+        : ep.indexOf("/raw/")===0 ? (it.kind==="script" ? it.text : JSON.stringify({error:"not_a_script"},null,2))
+        : JSON.stringify(pub(it),null,2);
+  } else {
+    var m = /category=(.+)$/.exec(ep), list = items;
+    if(m) list = items.filter(function(x){return x.category===decodeURIComponent(m[1]);});
+    out = JSON.stringify({count:list.length,resources:list.map(pub)},null,2);
+  }
+  $("api-out").textContent = out;
+};
+$("exp").onclick = function(){
+  if(!dl) return toast("Downloads are not available here");
+  dl.save({filename:"winds-resources.json",data:JSON.stringify({resources:items.map(pub)},null,2)}).catch(function(){toast("Download cancelled");});
+};
+
+$("theme").onclick = function(){
+  var r=document.documentElement,a=r.getAttribute("data-theme");
+  var dark = a ? a==="dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  r.setAttribute("data-theme", dark?"light":"dark");
+};
+
+render();
+(async function(){
+  if(!(window.claude && claude.use)){state="nodb";render();return;}
+  try{
+    db = await claude.use("db"); assets = await claude.use("assets"); dl = await claude.use("downloads");
+    var user = await claude.use("user");
+    if(user){try{var me=await user.me(); if(me && me.name) who={name:me.name};}catch(e){}}
+  }catch(e){}
+  if(!db){state="nodb";render();return;}
+  state="ready";
+  db.collection("resources").onSnapshot(function(s){
+    items = s.docs.map(function(d){var x=d.data();x.id=d.id;return x;}); render();
+  }, function(){state="nodb";render();});
+})();
+</script>
+</body>
+</html>
