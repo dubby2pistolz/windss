@@ -189,7 +189,7 @@ pre{margin:0;padding:14px;max-height:380px;overflow:auto;background:var(--input)
 <div class="toast" id="toast" role="status"></div>
 
 <script>
-var DISCORD_URL = "https://discord.gg/YOUR-INVITE"; // replace with your invite link
+var DISCORD_URL = "https://discord.gg/G47mKAt773"; // replace with your invite link
 var CATS = ["Scripts","Models","Plugins","UI / GFX","Other"];
 var $ = function(i){return document.getElementById(i);};
 $("join").href = DISCORD_URL;
@@ -235,7 +235,7 @@ function render(){
   var list = $("list"); list.innerHTML = "";
   var shown = items.filter(function(i){return cat==="All"||i.category===cat;}).sort(function(a,b){return (b.created||0)-(a.created||0);});
   if(!shown.length){
-    var msg = state==="nodb" ? "Sign in to claude.ai to view and share resources."
+    var msg = state==="nodb" ? "Coming Soon..."
             : state==="loading" ? "Loading resources..."
             : "No resources here yet. Use Share to add the first one.";
     list.appendChild(el("div","empty",msg)); return;
